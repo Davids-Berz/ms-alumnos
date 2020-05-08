@@ -30,6 +30,10 @@ public class AlumnoController extends GenericController<Alumno, IAlumnoService> 
         return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(editAlumno));
     }
 
+    @GetMapping("/filtrar/{text}")
+    public ResponseEntity<?> filtrar(@PathVariable String text){
+        return ResponseEntity.ok().body(service.findByNombreOrApellido(text));
+    }
 }
 
 
