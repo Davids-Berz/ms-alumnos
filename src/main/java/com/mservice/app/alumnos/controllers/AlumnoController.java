@@ -1,10 +1,8 @@
 package com.mservice.app.alumnos.controllers;
 
-import com.mservice.app.alumnos.models.entity.Alumno;
-import com.mservice.app.alumnos.models.repository.IAlumnoRepository;
 import com.mservice.app.alumnos.services.IAlumnoService;
+import com.mservice.commons.alumnos.models.entity.Alumno;
 import com.mservice.generic.controllers.GenericController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

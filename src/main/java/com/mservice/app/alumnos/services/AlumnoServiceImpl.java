@@ -1,7 +1,7 @@
 package com.mservice.app.alumnos.services;
 
-import com.mservice.app.alumnos.models.entity.Alumno;
 import com.mservice.app.alumnos.models.repository.IAlumnoRepository;
+import com.mservice.commons.alumnos.models.entity.Alumno;
 import com.mservice.generic.services.GenericServiceImpl;
 import org.springframework.stereotype.Service;
 
