@@ -18,7 +18,7 @@ public class AlumnoController extends GenericController<Alumno, IAlumnoService> 
     public ResponseEntity<?> editar(@Valid @RequestBody Alumno alumno, BindingResult result, @PathVariable Long id){
 
         if(result.hasErrors()){
-            this.validar(result);
+            return validar(result);
         }
         Optional<Alumno> dbAlumno = service.findById(id);
 
