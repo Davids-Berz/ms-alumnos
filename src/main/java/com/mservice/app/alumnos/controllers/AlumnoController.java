@@ -3,7 +3,10 @@ package com.mservice.app.alumnos.controllers;
 import com.mservice.app.alumnos.services.IAlumnoService;
 import com.mservice.commons.alumnos.models.entity.Alumno;
 import com.mservice.generic.controllers.GenericController;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,21 @@ import java.util.Optional;
 
 @RestController
 public class AlumnoController extends GenericController<Alumno, IAlumnoService> {
+
+    @GetMapping("/upload/img/{id}")
+    public ResponseEntity<?> verFoto(@PathVariable Long id){
+        Optional<Alumno> dbAlumno = service.findById(id);
+
+        if (dbAlumno.isEmpty() || dbAlumno.get().getFoto() == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        Alumno editAlumno = dbAlumno.get();
+        Resource imagen = new ByteArrayResource(editAlumno.getFoto());
+
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagen);
+
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> editar(@Valid @RequestBody Alumno alumno, BindingResult result, @PathVariable Long id){
