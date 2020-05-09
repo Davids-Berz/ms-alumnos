@@ -5,16 +5,21 @@ import com.mservice.commons.alumnos.models.entity.Alumno;
 import com.mservice.generic.controllers.GenericController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
 public class AlumnoController extends GenericController<Alumno, IAlumnoService> {
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editar(@RequestBody Alumno alumno,@PathVariable Long id){
+    public ResponseEntity<?> editar(@Valid @RequestBody Alumno alumno, BindingResult result, @PathVariable Long id){
 
+        if(result.hasErrors()){
+            this.validar(result);
+        }
         Optional<Alumno> dbAlumno = service.findById(id);
 
         if (dbAlumno.isEmpty()){
