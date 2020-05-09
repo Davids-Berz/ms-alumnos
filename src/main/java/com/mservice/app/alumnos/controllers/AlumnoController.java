@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -38,6 +40,43 @@ public class AlumnoController extends GenericController<Alumno, IAlumnoService> 
     @GetMapping("/filtrar/{text}")
     public ResponseEntity<?> filtrar(@PathVariable String text){
         return ResponseEntity.ok().body(service.findByNombreOrApellido(text));
+    }
+
+    @PostMapping("/crear-con-foto")
+    public ResponseEntity<?> crearConFoto(@Valid Alumno alumno, BindingResult result,
+                                          @RequestParam MultipartFile archivo) throws IOException {
+
+        if(!archivo.isEmpty()){
+            alumno.setFoto(archivo.getBytes());
+        }
+
+        return super.crear(alumno,result);
+    }
+
+    @PutMapping("/editar-con-foto/{id}")
+    public ResponseEntity<?> editarConFoto(@Valid Alumno alumno, BindingResult result, @PathVariable Long id,
+                                           @RequestParam MultipartFile archivo) throws IOException {
+
+        if(result.hasErrors()){
+            return validar(result);
+        }
+        Optional<Alumno> dbAlumno = service.findById(id);
+
+        if (dbAlumno.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        Alumno editAlumno = dbAlumno.get();
+
+        editAlumno.setNombre(alumno.getNombre());
+        editAlumno.setApellido(alumno.getApellido());
+        editAlumno.setEmail(alumno.getEmail());
+
+        if(!archivo.isEmpty()){
+            editAlumno.setFoto(archivo.getBytes());
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(editAlumno));
     }
 }
 
