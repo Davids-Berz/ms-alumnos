@@ -13,18 +13,22 @@ spring:
     name: ms-alumnos
 
   datasource:
-    url: jdbc:mysql://localhost:3307/db_microservicios_examenes
-    username: root
+    url: jdbc:postgresql://localhost:5432/db_ms_alumnos
+    username: postgres
     password: admin
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    platform: org.hibernate.dialect.MySQL8Dialect
+    driver-class-name: org.postgresql.Driver
+    platform: org.hibernate.dialect.PostgreSQL10Dialect
   jackson:
     time-zone: America/Mexico_City
     locale: es_MX
 
   jpa:
     generate-ddl: true
-
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
   logging:
     level:
       org:
