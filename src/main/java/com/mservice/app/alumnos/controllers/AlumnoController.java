@@ -19,6 +19,12 @@ import java.util.Optional;
 @RestController
 public class AlumnoController extends GenericController<Alumno, IAlumnoService> {
 
+    @GetMapping("/alumnos-por-curso")
+    public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam Iterable<Long> ids){
+        return ResponseEntity.ok(service.findAllById(ids));
+    }
+
+
     @GetMapping("/upload/img/{id}")
     public ResponseEntity<?> verFoto(@PathVariable Long id){
         Optional<Alumno> dbAlumno = service.findById(id);

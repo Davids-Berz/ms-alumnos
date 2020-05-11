@@ -8,4 +8,6 @@ import java.util.List;
 public interface IAlumnoService extends IGenericService<Alumno> {
 
     List<Alumno> findByNombreOrApellido(String text);
+    Iterable<Alumno> findAllById(Iterable<Long> ids);
+
 }

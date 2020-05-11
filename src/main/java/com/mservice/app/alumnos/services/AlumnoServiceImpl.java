@@ -16,4 +16,10 @@ public class AlumnoServiceImpl extends GenericServiceImpl<Alumno, IAlumnoReposit
     public List<Alumno> findByNombreOrApellido(String text) {
         return repository.findByNombreOrApellido(text);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Iterable<Alumno> findAllById(Iterable<Long> ids) {
+        return repository.findAllById(ids);
+    }
 }
