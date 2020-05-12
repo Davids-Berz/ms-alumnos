@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -18,6 +19,12 @@ import java.util.Optional;
 
 @RestController
 public class AlumnoController extends GenericController<Alumno, IAlumnoService> {
+
+    //Ejemplo de programacion reactiva
+    @GetMapping("/list")
+    Mono list(){
+        return  Mono.just(service.findAll());
+    }
 
     @GetMapping("/alumnos-por-curso")
     public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam Iterable<Long> ids){
